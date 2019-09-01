@@ -210,6 +210,7 @@ class VideoDataset(torch.utils.data.Dataset):
 
         self.total_frames = 0
         self.frame_counts = []
+        self.file2count = {}
         self.start_index = []
         for f in filenames:
             count = self.loader.frame_count(f);
@@ -219,6 +220,7 @@ class VideoDataset(torch.utils.data.Dataset):
                 continue
             count = count - self.sequence_length + 1
             self.frame_counts.append(count)
+            self.file2count[f] = count
             self.total_frames += count
             self.start_index.append(self.total_frames) # purposefully off by one for bisect to work
 
